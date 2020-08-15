@@ -1,11 +1,11 @@
 #include "calculator.h"
 #include "ui_calculator.h"
 
-double current_value = 0.0;
-bool add_clicked = false;
-bool minus_clicked = false;
-bool multiply_clicked = false;
-bool divide_clicked = false;
+double currentValue = 0.0;
+bool addClicked = false;
+bool minusClicked = false;
+bool multiplyClicked = false;
+bool divideClicked = false;
 
 Calculator::Calculator(QWidget *parent)
     : QMainWindow(parent)
@@ -13,7 +13,7 @@ Calculator::Calculator(QWidget *parent)
 {
     ui->setupUi(this);
     // ui->Widget
-    ui->Display->setText(QString::number(current_value));
+    ui->Display->setText(QString::number(currentValue));
 
     QPushButton *numButtons[10];
     for(int i = 0; i < 10; ++i){
@@ -40,33 +40,33 @@ Calculator::~Calculator()
 void Calculator::NumPressed(){
     QPushButton *button = (QPushButton *)sender();
     QString value = button->text();
-    QString display_value = ui->Display->text();
-    if(display_value.toDouble() == 0 || display_value.toDouble() == 0.0){
+    QString displayValue = ui->Display->text();
+    if(displayValue.toDouble() == 0 || displayValue.toDouble() == 0.0){
         ui->Display->setText(value);
     }else{
-        QString new_value = display_value + value;
-        double new_value_double = new_value.toDouble();
-        ui->Display->setText(QString::number(new_value_double,'g',20));
+        QString newValue = displayValue + value;
+        double newValueDouble = newValue.toDouble();
+        ui->Display->setText(QString::number(newValueDouble,'g',20));
     }
 }
 
 void Calculator::OperationPressed(){
-    add_clicked = false;
-    minus_clicked = false;
-    multiply_clicked = false;
-    divide_clicked = false;
-    QString display_value = ui->Display->text();
-    current_value = display_value.toDouble();
+    addClicked = false;
+    minusClicked = false;
+    multiplyClicked = false;
+    divideClicked = false;
+    QString displayValue = ui->Display->text();
+    currentValue = displayValue.toDouble();
     QPushButton *button = (QPushButton *)sender();
-    QString button_value = button->text();
-    if(QString::compare(button_value, "+", Qt::CaseSensitive) == 0){
-        add_clicked = true;
-    }else if(QString::compare(button_value, "-", Qt::CaseSensitive) == 0){
-        minus_clicked = true;
-    }else if(QString::compare(button_value, "*", Qt::CaseSensitive) == 0){
-        multiply_clicked = true;
-    }else if(QString::compare(button_value, "/", Qt::CaseSensitive) == 0){
-        divide_clicked = true;
+    QString buttonValue = button->text();
+    if(QString::compare(buttonValue, "+", Qt::CaseSensitive) == 0){
+        addClicked = true;
+    }else if(QString::compare(buttonValue, "-", Qt::CaseSensitive) == 0){
+        minusClicked = true;
+    }else if(QString::compare(buttonValue, "*", Qt::CaseSensitive) == 0){
+        multiplyClicked = true;
+    }else if(QString::compare(buttonValue, "/", Qt::CaseSensitive) == 0){
+        divideClicked = true;
     }
 
     ui->Display->setText("");
@@ -74,26 +74,26 @@ void Calculator::OperationPressed(){
 
 void Calculator::EqualPressed(){
     double result = 0.0;
-    QString display_value = ui->Display->text();
-    double display_value_double = display_value.toDouble();
-    if(add_clicked){
-        result = current_value + display_value_double;
-    }else if(minus_clicked){
-        result = current_value - display_value_double;
-    }else if(multiply_clicked){
-        result = current_value * display_value_double;
-    }else if(divide_clicked){
-        result = current_value / display_value_double;
+    QString displayValue = ui->Display->text();
+    double displayValueDouble = displayValue.toDouble();
+    if(addClicked){
+        result = currentValue + displayValueDouble;
+    }else if(minusClicked){
+        result = currentValue - displayValueDouble;
+    }else if(multiplyClicked){
+        result = currentValue * displayValueDouble;
+    }else if(divideClicked){
+        result = currentValue / displayValueDouble;
     }
 
     ui->Display->setText(QString::number(result));
 };
 
 void Calculator::FlipSignPressed(){
-    QString display_value = ui->Display->text();
+    QString displayValue = ui->Display->text();
     QRegExp regex("[-]?[0-9.]*");
-    if(regex.exactMatch(display_value)){
-        double display_value_double = -1 * display_value.toDouble();
-        ui->Display->setText(QString::number(display_value_double));
+    if(regex.exactMatch(displayValue)){
+        double displayValueDouble = -1 * displayValue.toDouble();
+        ui->Display->setText(QString::number(displayValueDouble));
     }
 };
