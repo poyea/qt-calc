@@ -17,5 +17,12 @@ public:
 
 private:
     Ui::Calculator *ui;
+
+private slots:
+    // Execute after emitting signals
+    void NumPressed();
+    void OperationPressed();
+    void EqualPressed();
+    void FlipSignPressed();
 };
 #endif // CALCULATOR_H
