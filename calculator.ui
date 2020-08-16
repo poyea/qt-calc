@@ -21,6 +21,11 @@
 	font-size: 26px;
 }
 
+QPushButton:pressed 
+{
+	background-color: blue;
+}
+
 QLineEdit {
 	background-color: gray;
 	color: white;
@@ -217,6 +222,11 @@ QLineEdit {
       <property name="styleSheet">
        <string notr="true">QPushButton {
 	background-color: sandybrown;
+}
+
+QPushButton:pressed 
+{
+	background-color: blue;
 }</string>
       </property>
       <property name="text">
@@ -541,6 +551,9 @@ QLineEdit {
     </item>
     <item row="0" column="0" colspan="6">
      <widget class="QLineEdit" name="Display">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -552,6 +565,9 @@ QLineEdit {
         <family>Arial</family>
         <pointsize>14</pointsize>
        </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>IBeamCursor</cursorShape>
       </property>
       <property name="text">
        <string>0.0</string>
