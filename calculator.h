@@ -9,20 +9,25 @@ QT_END_NAMESPACE
 
 class Calculator : public QMainWindow
 {
-    Q_OBJECT
+        Q_OBJECT
 
-public:
-    Calculator(QWidget *parent = nullptr);
-    ~Calculator();
+    public:
+        Calculator(QWidget* parent = nullptr);
+        ~Calculator();
 
-private:
-    Ui::Calculator *ui;
+    private:
+        Ui::Calculator* ui;
 
-private slots:
-    // Execute after emitting signals
-    void NumPressed();
-    void OperationPressed();
-    void EqualPressed();
-    void FlipSignPressed();
+    protected:
+        void keyPressEvent(QKeyEvent*);
+        void keyReleaseEvent(QKeyEvent*);
+
+    private slots:
+        // Execute after emitting signals
+        void ClearDisplay();
+        void EqualPressed();
+        void FlipSignPressed();
+        void OperationPressed();
+        void NumPressed();
 };
 #endif // CALCULATOR_H
