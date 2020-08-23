@@ -26,6 +26,10 @@ Calculator::Calculator(QWidget* parent)
         numButtons[i]->setShortcut(QKeySequence(QString::number(i)));
         connect(numButtons[i], SIGNAL(released()), this, SLOT(NumPressed()));
     }
+
+    ui->Dot->setShortcut(QKeySequence("."));
+    connect(ui->Dot, SIGNAL(released()), this, SLOT(DotPressed()));
+
     ui->Add->setShortcut(QKeySequence("+"));
     connect(ui->Add, SIGNAL(released()), this, SLOT(OperationPressed()));
     ui->Minus->setShortcut(QKeySequence("-"));
@@ -55,7 +59,13 @@ void Calculator::NumPressed()
     QPushButton* button = (QPushButton*)sender();
     QString value = button->text();
     QString displayValue = ui->Display->text();
-    if (displayValue.toDouble() == 0 || displayValue.toDouble() == 0.0)
+    int8_t length = displayValue.length();
+    QRegExp regex("^(0.)");
+    if (regex.exactMatch(displayValue))
+    {
+        ui->Display->setText(displayValue + QString(value));
+    }
+    else if (displayValue.toDouble() == 0 || displayValue.toDouble() == 0.0)
     {
         ui->Display->setText(value);
     }
@@ -63,7 +73,17 @@ void Calculator::NumPressed()
     {
         QString newValue = displayValue + value;
         double newValueDouble = newValue.toDouble();
-        ui->Display->setText(QString::number(newValueDouble, 'g', 20));
+        ui->Display->setText(QString::number(newValueDouble, 'g', length));
+    }
+}
+
+void Calculator::DotPressed()
+{
+    QString displayValue = ui->Display->text();
+    QRegExp regex("[^.]+");
+    if (regex.exactMatch(displayValue))
+    {
+        ui->Display->setText(displayValue + QString("."));
     }
 }
 
@@ -133,29 +153,7 @@ void Calculator::FlipSignPressed()
 
 void Calculator::ClearDisplay()
 {
+    currentValue = 0.0;
+    ui->Display->setText(QString::number(currentValue));
 }
 
-void Calculator::keyPressEvent(QKeyEvent* event)
-{
-    switch (event->key())
-    {
-        case Qt::Key_Enter:
-            {
-                //this->EqualPressed();
-                break;
-            }
-        case Qt::Key_Return:
-            {
-                //this->EqualPressed();
-                break;
-            }
-    }
-}
-
-void Calculator::keyReleaseEvent(QKeyEvent* event)
-{
-    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
-    {
-        return;
-    }
-}

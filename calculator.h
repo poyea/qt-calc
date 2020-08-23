@@ -18,10 +18,6 @@ class Calculator : public QMainWindow
     private:
         Ui::Calculator* ui;
 
-    protected:
-        void keyPressEvent(QKeyEvent*);
-        void keyReleaseEvent(QKeyEvent*);
-
     private slots:
         // Execute after emitting signals
         void ClearDisplay();
@@ -29,5 +25,6 @@ class Calculator : public QMainWindow
         void FlipSignPressed();
         void OperationPressed();
         void NumPressed();
+        void DotPressed();
 };
 #endif // CALCULATOR_H
