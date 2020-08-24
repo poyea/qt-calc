@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QShortcut>
 
+const uint16_t DEFAULT_LENGTH = 20;
 double currentValue = 0.0;
 bool addClicked = false;
 bool minusClicked = false;
@@ -47,6 +48,11 @@ Calculator::Calculator(QWidget* parent)
 
     ui->AC->setShortcut(QKeySequence("c"));
     connect(ui->AC, SIGNAL(released()), this, SLOT(ClearDisplay()));
+
+    ui->Conste->setShortcut(QKeySequence("e"));
+    connect(ui->Conste, SIGNAL(released()), this, SLOT(ePressed()));
+    ui->Constpi->setShortcut(QKeySequence("p"));
+    connect(ui->Constpi, SIGNAL(released()), this, SLOT(piPressed()));
 }
 
 Calculator::~Calculator()
@@ -54,12 +60,23 @@ Calculator::~Calculator()
     delete ui;
 }
 
+void Calculator::ePressed()
+{
+    currentValue = 2.7182818284590452353602874713526624977572470936999;
+    ui->Display->setText(QString::number(currentValue, 'g', DEFAULT_LENGTH));
+}
+
+void Calculator::piPressed()
+{
+    currentValue = 3.1415926535897932384626433832795028841971693993751;
+    ui->Display->setText(QString::number(currentValue, 'g', DEFAULT_LENGTH));
+}
+
 void Calculator::NumPressed()
 {
     QPushButton* button = (QPushButton*)sender();
     QString value = button->text();
     QString displayValue = ui->Display->text();
-    int8_t length = displayValue.length();
     QRegExp regex("^(0.)");
     if (regex.exactMatch(displayValue))
     {
@@ -73,7 +90,7 @@ void Calculator::NumPressed()
     {
         QString newValue = displayValue + value;
         double newValueDouble = newValue.toDouble();
-        ui->Display->setText(QString::number(newValueDouble, 'g', length));
+        ui->Display->setText(QString::number(newValueDouble, 'g', DEFAULT_LENGTH));
     }
 }
 
@@ -137,7 +154,7 @@ void Calculator::EqualPressed()
     {
         result = currentValue / displayValueDouble;
     }
-    ui->Display->setText(QString::number(result));
+    ui->Display->setText(QString::number(result, 'g', DEFAULT_LENGTH));
 };
 
 void Calculator::FlipSignPressed()
@@ -147,7 +164,7 @@ void Calculator::FlipSignPressed()
     if (regex.exactMatch(displayValue))
     {
         double displayValueDouble = -1 * displayValue.toDouble();
-        ui->Display->setText(QString::number(displayValueDouble));
+        ui->Display->setText(QString::number(displayValueDouble, 'g', DEFAULT_LENGTH));
     }
 };
 

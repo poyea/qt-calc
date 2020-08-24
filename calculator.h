@@ -26,5 +26,7 @@ class Calculator : public QMainWindow
         void OperationPressed();
         void NumPressed();
         void DotPressed();
+        void ePressed();
+        void piPressed();
 };
 #endif // CALCULATOR_H
