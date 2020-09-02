@@ -6,6 +6,7 @@
 
 const uint16_t DEFAULT_LENGTH = 20;
 double currentValue = 0.0;
+double operationValue = 0.0;
 bool addClicked = false;
 bool minusClicked = false;
 bool multiplyClicked = false;
@@ -53,6 +54,9 @@ Calculator::Calculator(QWidget* parent)
     connect(ui->Conste, SIGNAL(released()), this, SLOT(ePressed()));
     ui->Constpi->setShortcut(QKeySequence("p"));
     connect(ui->Constpi, SIGNAL(released()), this, SLOT(piPressed()));
+
+    ui->Off->setShortcut(QKeySequence(Qt::Key_Escape));
+    connect(ui->Off, SIGNAL(released()), this, SLOT(offPressed()));
 }
 
 Calculator::~Calculator()
@@ -138,22 +142,27 @@ void Calculator::EqualPressed()
     double result = 0.0;
     QString displayValue = ui->Display->text();
     double displayValueDouble = displayValue.toDouble();
+    if (addClicked || minusClicked || multiplyClicked || divideClicked)
+    {
+        operationValue = displayValueDouble;
+    }
     if (addClicked)
     {
-        result = currentValue + displayValueDouble;
+        result = currentValue + operationValue;
     }
     else if (minusClicked)
     {
-        result = currentValue - displayValueDouble;
+        result = currentValue - operationValue;
     }
     else if (multiplyClicked)
     {
-        result = currentValue * displayValueDouble;
+        result = currentValue * operationValue;
     }
     else if (divideClicked)
     {
-        result = currentValue / displayValueDouble;
+        result = currentValue / operationValue;
     }
+
     ui->Display->setText(QString::number(result, 'g', DEFAULT_LENGTH));
 };
 
@@ -174,3 +183,7 @@ void Calculator::ClearDisplay()
     ui->Display->setText(QString::number(currentValue));
 }
 
+void Calculator::offPressed()
+{
+    this->close();
+}
