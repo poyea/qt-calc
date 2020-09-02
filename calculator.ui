@@ -94,7 +94,7 @@ QLineEdit {
        </font>
       </property>
       <property name="text">
-       <string>M</string>
+       <string>MR</string>
       </property>
      </widget>
     </item>
@@ -461,7 +461,7 @@ QPushButton:pressed
        </font>
       </property>
       <property name="text">
-       <string>M-</string>
+       <string>MC</string>
       </property>
      </widget>
     </item>
