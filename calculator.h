@@ -29,5 +29,8 @@ class Calculator : public QMainWindow
         void ePressed();
         void piPressed();
         void offPressed();
+        void memPlusPressed();
+        void memClearPressed();
+        void memRecallPressed();
 };
 #endif // CALCULATOR_H

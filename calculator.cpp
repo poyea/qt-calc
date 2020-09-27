@@ -177,6 +177,21 @@ void Calculator::FlipSignPressed()
     }
 };
 
+void Calculator::memPlusPressed()
+{
+    // ToDo
+};
+
+void Calculator::memClearPressed()
+{
+    // ToDo
+};
+
+void Calculator::memRecallPressed()
+{
+    // ToDo
+};
+
 void Calculator::ClearDisplay()
 {
     currentValue = 0.0;
