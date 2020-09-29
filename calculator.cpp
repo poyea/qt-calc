@@ -7,6 +7,7 @@
 const uint16_t DEFAULT_LENGTH = 20;
 double currentValue = 0.0;
 double operationValue = 0.0;
+double memory = 0.0;
 bool addClicked = false;
 bool minusClicked = false;
 bool multiplyClicked = false;
@@ -57,6 +58,10 @@ Calculator::Calculator(QWidget* parent)
 
     ui->Off->setShortcut(QKeySequence(Qt::Key_Escape));
     connect(ui->Off, SIGNAL(released()), this, SLOT(offPressed()));
+
+    connect(ui->MemoryAdd, SIGNAL(released()), this, SLOT(memPlusPressed()));
+    connect(ui->MemoryGet, SIGNAL(released()), this, SLOT(memRecallPressed()));
+    connect(ui->MemoryClear, SIGNAL(released()), this, SLOT(memClearPressed()));
 }
 
 Calculator::~Calculator()
@@ -179,17 +184,18 @@ void Calculator::FlipSignPressed()
 
 void Calculator::memPlusPressed()
 {
-    // ToDo
+    QString displayValue = ui->Display->text();
+    memory += displayValue.toDouble();
 };
 
 void Calculator::memClearPressed()
 {
-    // ToDo
+    memory = 0.0;
 };
 
 void Calculator::memRecallPressed()
 {
-    // ToDo
+    ui->Display->setText(QString::number(memory, 'g', DEFAULT_LENGTH));
 };
 
 void Calculator::ClearDisplay()
