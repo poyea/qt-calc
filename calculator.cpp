@@ -87,7 +87,12 @@ void Calculator::NumPressed()
     QString value = button->text();
     QString displayValue = ui->Display->text();
     QRegExp regex("^(0.)");
-    if (regex.exactMatch(displayValue))
+    QRegExp regexHasDot(".*[.].*");
+    if (regexHasDot.exactMatch(displayValue))
+    {
+        ui->Display->setText(displayValue + QString(value));
+    }
+    else if (regex.exactMatch(displayValue))
     {
         ui->Display->setText(displayValue + QString(value));
     }
@@ -99,7 +104,7 @@ void Calculator::NumPressed()
     {
         QString newValue = displayValue + value;
         double newValueDouble = newValue.toDouble();
-        ui->Display->setText(QString::number(newValueDouble, 'g', DEFAULT_LENGTH));
+        ui->Display->setText(QString::number(newValueDouble));
     }
 }
 
@@ -167,8 +172,7 @@ void Calculator::EqualPressed()
     {
         result = currentValue / operationValue;
     }
-
-    ui->Display->setText(QString::number(result, 'g', DEFAULT_LENGTH));
+    ui->Display->setText(QString::number(result));
 };
 
 void Calculator::FlipSignPressed()
@@ -178,7 +182,7 @@ void Calculator::FlipSignPressed()
     if (regex.exactMatch(displayValue))
     {
         double displayValueDouble = -1 * displayValue.toDouble();
-        ui->Display->setText(QString::number(displayValueDouble, 'g', DEFAULT_LENGTH));
+        ui->Display->setText(QString::number(displayValueDouble));
     }
 };
 
@@ -195,7 +199,7 @@ void Calculator::memClearPressed()
 
 void Calculator::memRecallPressed()
 {
-    ui->Display->setText(QString::number(memory, 'g', DEFAULT_LENGTH));
+    ui->Display->setText(QString::number(memory));
 };
 
 void Calculator::ClearDisplay()
